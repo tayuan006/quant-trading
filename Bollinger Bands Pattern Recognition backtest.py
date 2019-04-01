@@ -36,7 +36,7 @@ os.chdir('d:/')
 #first step is to calculate moving average and moving standard deviation
 #we plus/minus two standard deviations on moving average
 #we get our upper, mid, lower bands
-def bollinger_bands(df):
+def bollinger_bands(df):           # bond rank 
     
     data=copy.deepcopy(df)
     data['std']=data['price'].rolling(window=20,min_periods=20).std()
@@ -50,9 +50,9 @@ def bollinger_bands(df):
 # In[4]:
 
 
-#the signal generation is a bit tricky
+#the signal generation is a bit tricky       #取巧的迭代方式
 #there are four conditions to satisfy
-#for the shape of w, there are five nodes
+#for the shape of w, there are five nodes    
 #from left to right, top to bottom, l,k,j,m,i
 #when we generate signals
 #the iteration node is the top right node i, condition 4
@@ -90,7 +90,7 @@ def signal_generation(data,method):
     df['cumsum']=0
     df['coordinates']=''
     
-    for i in range(period,len(df)):
+    for i in range(period,len(df)):     #3月之内的      df为数据， 
         
         #moveon is a process control
         #if moveon==true, we move on to verify the next condition
@@ -106,9 +106,9 @@ def signal_generation(data,method):
         #i personally think its too late for following the trend
         #after confirmation of several breakthroughs
         #maybe its good for stop and reverse
-        #condition 4
-        if (df['price'][i]>df['upper band'][i]) and \
-        (df['cumsum'][i]==0):
+        #condition 4                                            #长线操作，5种情况的批量操作
+        if (df['price'][i]>df['upper band'][i]) and \           # alpha belta 的 therehold
+        (df['cumsum'][i]==0):                                   
             
             for j in range(i,i-period,-1):                
                 
